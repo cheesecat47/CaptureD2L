@@ -1,17 +1,34 @@
 import os
+import time
 from pathlib import Path
 from uuid import uuid4
 
 from captured2l import captured2l
 from captured2l.model.image import ImageUpload, save_image
 from config import Settings, get_settings
-from fastapi import Depends, FastAPI, File, UploadFile
+from fastapi import Depends, FastAPI, File, Query, UploadFile
 from fastapi.responses import FileResponse
+from loguru import logger
 
 BASE_DIR = Path(__file__).resolve().parent
 
 
 app = FastAPI()
+
+
+@app.on_event('startup')
+async def startup_event():
+    log_dir = os.path.join(BASE_DIR, 'logs')
+    os.makedirs(log_dir, exist_ok=True)
+    logger.add(os.path.join(log_dir, 'api.log'),
+               backtrace=True, diagnose=True,
+               rotation="1 day", compression="gz", colorize=True)
+    logger.info(f"API Server start at {time.time_ns()}")
+
+
+@app.on_event('shutdown')
+async def shutdown_event():
+    logger.info(f"API Server shutdown at {time.time_ns()}")
 
 
 @app.get('/')
@@ -30,27 +47,28 @@ async def root(
 )
 async def invert(
     file: UploadFile = File(...),
-    # gamma:
+    gamma: float = Query(default=1.8, gt=-3.0, le=3.0),
 ):
     this_uuid = uuid4()
     upload_dir = os.path.join(BASE_DIR, 'uploads', str(this_uuid))
     os.makedirs(upload_dir, exist_ok=True)
 
     upload_path = os.path.join(upload_dir, file.filename)
-    print(f"{upload_path = }")
+    logger.info(f"{upload_path = }")
 
     this_image = ImageUpload(
         img_path=upload_path,
         uuid=this_uuid,
-        file=file
+        file=file,
+        gamma=gamma
     )
-    print(f"{this_image = }")
+    logger.info(f"{this_image = }")
 
     try:
         await save_image(image=this_image)
     except Exception as e:
         err_msg = f"Failed to save the uploaded image: {e}"
-        print(err_msg)
+        logger.exception(err_msg)
         return {"message": err_msg}
 
     await captured2l.invert_dark_to_light(this_image)

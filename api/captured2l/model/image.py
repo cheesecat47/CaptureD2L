@@ -2,6 +2,7 @@ from uuid import UUID
 
 import aiofiles
 from fastapi import UploadFile
+from loguru import logger
 from pydantic import BaseModel
 
 
@@ -29,6 +30,8 @@ async def save_image(
         - <https://www.tutorialsbuddy.com/python-fastapi-upload-files>
     """
     try:
+        logger.info(
+            f"Write image file into the temporary storage: {image.img_path = } {image.file = }")
         async with aiofiles.open(image.img_path, 'wb') as fout:
             while content := await image.file.read(1024):
                 await fout.write(content)

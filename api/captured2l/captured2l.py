@@ -4,6 +4,7 @@ import os
 import cv2
 import numpy as np
 from captured2l.model.image import ImageUpload
+from loguru import logger
 
 
 def modify_gamma_channel_l(
@@ -21,15 +22,12 @@ def modify_gamma_channel_l(
 
 async def invert_dark_to_light(
     image: ImageUpload,
-    gamma: float = 1.8
 ) -> str:
     """
     Invert dark mode captured image to light mode image, keeping colour data.  
 
     Args:  
-        img_path (str): path of input(source) image.  
-        out_path (str): path of output(destination) image.  
-        gamma (float): gamma value for the image. Default is 1.8.  
+        image (ImageUpload): input(source) image.  
 
     Returns:  
         str: path of output(generated) image.  
@@ -40,9 +38,10 @@ async def invert_dark_to_light(
 
     try:
         image.out_path = image.img_path.replace('.png', '_d2l.png')
-        print(f"Convert {image.img_path} to light theme: {image.out_path}")
+        logger.info(
+            f"Convert {image.img_path} to light theme: {image.out_path}")
     except Exception as e:
-        print(
+        logger.exception(
             f"Failed to convert {image.img_path} to light theme: {image.out_path}")
         raise e
 
@@ -58,12 +57,12 @@ async def invert_dark_to_light(
 
     # invert L channel
     l_new = 255 - l
-    l_new = modify_gamma_channel_l(l_new, gamma)
+    l_new = modify_gamma_channel_l(l_new, image.gamma)
 
     # merge inverted l channel to make new image
     image_hls_new = cv2.merge([h, l_new, s])
-    image_bgra_new = cv2.cvtColor(cv2.cvtColor(
-        image_hls_new, cv2.COLOR_HLS2BGR), cv2.COLOR_BGR2BGRA)
+    image_bgra_new = cv2.cvtColor(cv2.cvtColor(image_hls_new, cv2.COLOR_HLS2BGR),
+                                  cv2.COLOR_BGR2BGRA)
 
     # revert alpha channel
     image_bgra_new[:, :, 3] = alpha
@@ -84,13 +83,12 @@ if __name__ == "__main__":
             paths = sys.argv[-1]
 
         sample_list = glob.glob(paths)
-        sample_list
 
         for fpath in sample_list:
             if not os.path.exists(fpath):
                 continue
             invert_dark_to_light(fpath)
     except Exception as e:
-        print(e)
+        logger.exception(e)
 
 __all__ = [invert_dark_to_light]
