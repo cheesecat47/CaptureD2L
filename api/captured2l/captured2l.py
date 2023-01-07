@@ -3,6 +3,7 @@ import os
 
 import cv2
 import numpy as np
+from captured2l.model.image import ImageUpload
 
 
 def modify_gamma_channel_l(
@@ -18,9 +19,8 @@ def modify_gamma_channel_l(
     return l_new.astype(np.uint8)
 
 
-def invert_dark_to_light(
-    img_path: str = None,
-    out_path: str = './outputs',
+async def invert_dark_to_light(
+    image: ImageUpload,
     gamma: float = 1.8
 ) -> str:
     """
@@ -35,16 +35,18 @@ def invert_dark_to_light(
         str: path of output(generated) image.  
     """
 
-    if img_path is None:
+    if image.img_path is None:
         return
 
-    os.makedirs(out_path, exist_ok=True)
+    try:
+        image.out_path = image.img_path.replace('.png', '_d2l.png')
+        print(f"Convert {image.img_path} to light theme: {image.out_path}")
+    except Exception as e:
+        print(
+            f"Failed to convert {image.img_path} to light theme: {image.out_path}")
+        raise e
 
-    basename = os.path.basename(img_path)
-    out_path = os.path.join(out_path, basename.replace('.png', '_d2l.png'))
-    print(f"Convert {basename} to light theme: {out_path}")
-
-    image_bgra = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+    image_bgra = cv2.imread(image.img_path, cv2.IMREAD_UNCHANGED)
 
     # preserve alpha channel
     alpha = image_bgra[:, :, 3]
@@ -67,9 +69,9 @@ def invert_dark_to_light(
     image_bgra_new[:, :, 3] = alpha
 
     # export new image
-    cv2.imwrite(out_path, image_bgra_new)
+    cv2.imwrite(image.out_path, image_bgra_new)
 
-    return out_path
+    return image.out_path
 
 
 if __name__ == "__main__":
@@ -90,3 +92,5 @@ if __name__ == "__main__":
             invert_dark_to_light(fpath)
     except Exception as e:
         print(e)
+
+__all__ = [invert_dark_to_light]
