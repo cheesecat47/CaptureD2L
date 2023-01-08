@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 8001:8000
+    networks:
+      - captured2l_network
+
+networks:
+  captured2l_network:
+
