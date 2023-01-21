@@ -9,11 +9,17 @@ from config import Settings, get_settings
 from fastapi import Depends, FastAPI, File, Query, UploadFile
 from fastapi.responses import FileResponse
 from loguru import logger
+from starlette.middleware.cors import CORSMiddleware
 
 BASE_DIR = Path(__file__).resolve().parent
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+)
 
 
 @app.on_event('startup')

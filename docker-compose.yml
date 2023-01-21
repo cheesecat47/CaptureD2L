@@ -6,11 +6,26 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
+    volumes:
+      - ./api/uploads:/app/uploads
+      - ./api/logs:/app/logs
     ports:
       - 8001:8000
     networks:
-      - captured2l_network
+      - default
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+    restart: unless-stopped
 
 networks:
-  captured2l_network:
-
+  default:

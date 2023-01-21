@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.11-slim as builder
+FROM python:3.11 as builder
 
 ENV PYTHONUNBUFFERED = 1
 
@@ -12,7 +12,7 @@ RUN apt-get update; apt-get install -y gcc python3-dev python3-venv libgl1-mesa-
     venv/bin/pip install -U pip setuptools; \
     venv/bin/pip install -r ./requirements.txt;
 
-FROM python:3.11-slim 
+FROM python:3.11 
 
 WORKDIR /app
 
