@@ -3,9 +3,6 @@ import styles from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Home, About } from '../pages';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MyNav from '../components/nav';
-// import logo from './logo.svg';
-
 
 const router = createBrowserRouter([
   {
@@ -24,7 +21,6 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <RouterProvider router={router} />
-        {/* <MyNav /> */}
       </div>
     );
   }

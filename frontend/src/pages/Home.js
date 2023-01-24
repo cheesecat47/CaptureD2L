@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import MyNav from '../components/Navigation';
 
 class Home extends Component {
 
@@ -38,6 +39,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <MyNav />
                 <div>
                     <input type="file" name="file" onChange={e => this.handleFileInput(e)} />
                     <input type="text" name="gamma" />
