@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MyNav from '../components/Navigation';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Stack from 'react-bootstrap/Stack';
+import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image'
+import sample_before from '../assets/img/sample_before.png';
+import sample_after from '../assets/img/sample_after.png';
 
 class Home extends Component {
 
@@ -38,22 +46,26 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
+            <>
                 <MyNav />
-                <div>
-                    <input type="file" name="file" onChange={e => this.handleFileInput(e)} />
-                    <input type="text" name="gamma" />
-                    <button type="submit" onClick={() => this.handlePost()}>Invert Dark mode to Light!</button>
-                </div>
-                <div>
-                    <div id="img_before">
-                        <img src={this.state.imgBefore} alt="preview-img"></img>
-                    </div>
-                    <div id="img_after">
-
-                    </div>
-                </div>
-            </div>
+                <Container>
+                    <Row>
+                        <Stack>
+                            <input type="file" name="file" onChange={e => this.handleFileInput(e)} />
+                            <input type="text" name="gamma" />
+                            <Button type="submit" onClick={() => this.handlePost()}>Invert Dark mode to Light!</Button>
+                        </Stack>
+                    </Row>
+                    <Row>
+                        <Col md={6} id="img_before">
+                            <Image src={this.state.imgBefore || sample_before} alt="preview-img" fluid />
+                        </Col>
+                        <Col md={6} id="img_after">
+                            <Image src={this.state.imgAfter || sample_after} alt="preview-img" fluid />
+                        </Col>
+                    </Row>
+                </Container>
+            </>
         );
     };
 };
