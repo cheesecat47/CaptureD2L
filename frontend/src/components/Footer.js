@@ -13,19 +13,14 @@ const MyFooter = () => {
             <footer>
                 <Row>
                     <Col>
-                        Capture D2L
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
                         <a href={process.env.REACT_APP_GITHUB_URL}><FontAwesomeIcon icon={faGithub} /></a>
                         <a href={process.env.REACT_APP_LINKEDIN_URL}><FontAwesomeIcon icon={faLinkedin} /></a>
-                        <a href={process.env.REACT_APP_MAIL_ACCOUNT}><FontAwesomeIcon icon={faEnvelope} /></a>
+                        <a href={"mailto:"+process.env.REACT_APP_MAIL_ACCOUNT}><FontAwesomeIcon icon={faEnvelope} /></a>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        Copyright 2023. cheesecat47.
+                    CaptureD2L © 2023. cheesecat47.
                     </Col>
                 </Row>
             </footer>
