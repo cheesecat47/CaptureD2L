@@ -24,24 +24,29 @@ class Home extends Component {
     handleFileInput(e) {
         this.setState({
             selectFile: e.target.files[0],
-            imgBefore: URL.createObjectURL(e.target.files[0])
+            imgBefore: URL.createObjectURL(e.target.files[0]),
+            imgAfter: Object()
         })
     }
 
     async handlePost() {
-        try {
-            const res = await axios.postForm("/api/invert", {
-                "file": this.state.selectFile
-            });
-            console.log('success: ' + res);
-            // if (res.data) {
-            //   this.setState({
-            //     imgAfter: URL.createObjectURL(res.data) // bytestream으로 들어옴. 핸들링 필요.
-            //   })
-            // }
-        } catch (err) {
+        axios.postForm("/api/invert", {
+            "file": this.state.selectFile
+        }, {
+            responseType: 'blob'
+        }).then((res) => {
+            console.log('success: ', res);
+            if (res.data) {
+                // https://webcorgi.tistory.com/40
+                this.setState({
+                    imgAfter: URL.createObjectURL(new Blob([res.data], {
+                        type: res.headers['content-type']
+                    })) // bytestream으로 들어옴. 핸들링 필요.
+                })
+            }
+        }).catch((err) => {
             alert('failed: ' + err);
-        }
+        })
     }
 
     render() {
