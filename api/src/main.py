@@ -6,7 +6,7 @@ from uuid import uuid4
 from captured2l import captured2l
 from captured2l.model.image import ImageUpload, save_image
 from config import Settings, get_settings
-from fastapi import Depends, FastAPI, File, Query, UploadFile
+from fastapi import Depends, FastAPI, File, Form, Query, UploadFile
 from fastapi.responses import FileResponse
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware
@@ -53,7 +53,7 @@ async def root(
 )
 async def invert(
     file: UploadFile = File(...),
-    gamma: float = Query(default=1.8, gt=-3.0, le=3.0),
+    gamma: float = Form(default=1.8, gt=0, le=3.0),
 ):
     this_uuid = uuid4()
     upload_dir = os.path.join(BASE_DIR, 'uploads', str(this_uuid))

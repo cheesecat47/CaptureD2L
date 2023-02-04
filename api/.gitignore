@@ -1,2 +1,3 @@
-uploads/*
-logs/*
+src/uploads/*
+src/logs/*
+venv/

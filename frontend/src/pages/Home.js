@@ -4,9 +4,9 @@ import MyNav from '../components/Navigation';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image'
+import Form from 'react-bootstrap/Form';
 import sample_before from '../assets/img/sample_before.png';
 import sample_after from '../assets/img/sample_after.png';
 
@@ -14,6 +14,7 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.gammaValueRef = React.createRef();
         this.state = {
             selectFile: null,
             imgBefore: null,
@@ -31,8 +32,20 @@ class Home extends Component {
     }
 
     async handlePost() {
+        // Default gamma value = 1.8. 
+        // Higher gamma value makes the result image brighter
+        let gamma = 1.8;
+        if (this.gammaValueRef.current.value) {
+            try {
+                gamma = parseFloat(this.gammaValueRef.current.value);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
         axios.postForm("/api/invert", {
-            "file": this.state.selectFile
+            "file": this.state.selectFile,
+            "gamma": gamma
         }, {
             responseType: 'blob'
         }).then((res) => {
@@ -59,12 +72,20 @@ class Home extends Component {
             <>
                 <MyNav />
                 <Container>
-                    <Row>
-                        <Stack>
-                            <input type="file" name="file" onChange={e => this.handleFileInput(e)} />
-                            <input type="text" name="gamma" />
-                            <Button type="submit" onClick={() => this.handlePost()}>Invert Dark mode to Light!</Button>
-                        </Stack>
+                    <Row className='justify-content-center'>
+                        <Col sm={9}>
+                            <Form>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Image</Form.Label>
+                                    <Form.Control type="file" name="file" onChange={e => this.handleFileInput(e)} />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Gamma</Form.Label>
+                                    <Form.Control type="number" step="0.1" placeholder="1.8" max="5" min="0" name="gamma" ref={this.gammaValueRef} />
+                                </Form.Group>
+                                <Button type="button" onClick={() => this.handlePost()}>Invert Dark mode to Light!</Button>
+                            </Form>
+                        </Col>
                     </Row>
                     <Row>
                         <Col md={6} id="img_before">
