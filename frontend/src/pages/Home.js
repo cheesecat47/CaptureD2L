@@ -18,6 +18,7 @@ class Home extends Component {
             selectFile: null,
             imgBefore: null,
             imgAfter: null,
+            filename: null,
         }
     }
 
@@ -35,13 +36,17 @@ class Home extends Component {
         }, {
             responseType: 'blob'
         }).then((res) => {
-            console.log('success: ', res);
+            let filename = res.headers['content-disposition'].split('filename=')[1].replace(/"/g, '');
+            console.log('success: ', res, 'filename:', filename);
+
             if (res.data) {
                 // https://webcorgi.tistory.com/40
+                const objectURL = URL.createObjectURL(new File([res.data], filename, {
+                    type: res.headers['content-type'],
+                }));
                 this.setState({
-                    imgAfter: URL.createObjectURL(new Blob([res.data], {
-                        type: res.headers['content-type']
-                    })) // bytestream으로 들어옴. 핸들링 필요.
+                    imgAfter: objectURL,
+                    filename: filename,
                 })
             }
         }).catch((err) => {
@@ -66,7 +71,9 @@ class Home extends Component {
                             <Image src={this.state.imgBefore || sample_before} alt="preview-img" fluid />
                         </Col>
                         <Col md={6} id="img_after">
-                            <Image src={this.state.imgAfter || sample_after} alt="preview-img" fluid />
+                            <a href={this.state.imgAfter || "#"} download={this.state.filename || null} className='w-100 h-100'>
+                                <Image src={this.state.imgAfter || sample_after} alt="preview-img" fluid />
+                            </a>
                         </Col>
                     </Row>
                 </Container>

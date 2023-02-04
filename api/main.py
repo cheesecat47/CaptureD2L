@@ -57,7 +57,9 @@ async def invert(
 ):
     this_uuid = uuid4()
     upload_dir = os.path.join(BASE_DIR, 'uploads', str(this_uuid))
-    os.makedirs(upload_dir, exist_ok=True)
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir, exist_ok=True)
+        logger.info(f"{upload_dir = }")
 
     upload_path = os.path.join(upload_dir, file.filename)
     logger.info(f"{upload_path = }")
@@ -72,11 +74,19 @@ async def invert(
 
     try:
         await save_image(image=this_image)
+        logger.info(f"Success to save image: {this_image}")
     except Exception as e:
         err_msg = f"Failed to save the uploaded image: {e}"
         logger.exception(err_msg)
         return {"message": err_msg}
 
-    await captured2l.invert_dark_to_light(this_image)
+    try:
+        this_image.out_path = await captured2l.invert_dark_to_light(this_image)
+        logger.info(f"Success to invert image: {this_image.out_path}")
 
-    return FileResponse(this_image.out_path)
+        return FileResponse(this_image.out_path,
+                            media_type="image/png",
+                            filename=os.path.basename(this_image.out_path))
+    except Exception as e:
+        logger.exception(
+            f"Failed to convert {this_image.img_path} to light theme: {e}")

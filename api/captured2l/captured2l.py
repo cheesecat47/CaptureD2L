@@ -41,8 +41,6 @@ async def invert_dark_to_light(
         logger.info(
             f"Convert {image.img_path} to light theme: {image.out_path}")
     except Exception as e:
-        logger.exception(
-            f"Failed to convert {image.img_path} to light theme: {image.out_path}")
         raise e
 
     image_bgra = cv2.imread(image.img_path, cv2.IMREAD_UNCHANGED)
