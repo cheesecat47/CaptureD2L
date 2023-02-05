@@ -1,18 +1,22 @@
 version: '3.9'
 
 services:
+  traefik:
+    image: traefik:2.9
+    ports:
+      - 80:80 # http port
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/config/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/config/rules.yml:/etc/traefik/rules.yml:ro
+    restart: unless-stopped
 
   api:
     build:
       context: ./api
       dockerfile: Dockerfile
     volumes:
-      - ./api/uploads:/app/uploads
-      - ./api/logs:/app/logs
-    ports:
-      - 8001:8000
-    networks:
-      - default
+      - ./api/src/:/app/
     restart: unless-stopped
 
   frontend:
@@ -21,11 +25,4 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
-    ports:
-      - "3000:3000"
-    networks:
-      - default
     restart: unless-stopped
-
-networks:
-  default:

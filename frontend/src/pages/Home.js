@@ -43,7 +43,7 @@ class Home extends Component {
             }
         }
 
-        axios.postForm("/api/invert", {
+        axios.postForm("/captured2l/api/v1/invert", {
             "file": this.state.selectFile,
             "gamma": gamma
         }, {

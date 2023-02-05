@@ -24,5 +24,4 @@ RUN apt-get update; apt-get install -y libgl1-mesa-glx libglib2.0-0;
 
 ENV PATH="/venv/bin:$PATH"
 
-CMD [ "uvicorn", "main:app", "--host=0.0.0.0", "--reload" ] 
-    # "--root-path", "/api/v1"
+CMD [ "uvicorn", "main:app", "--host=0.0.0.0", "--reload", "--root-path", "/captured2l/api/v1" ] 
