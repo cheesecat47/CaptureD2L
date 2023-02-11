@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get update
-# npm install
+RUN apt-get update; npm install
 
 CMD [ "npm", "start" ]

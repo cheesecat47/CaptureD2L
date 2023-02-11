@@ -6,7 +6,7 @@ from uuid import uuid4
 from captured2l import captured2l
 from captured2l.model.image import ImageUpload, save_image
 from config import Settings, get_settings
-from fastapi import Depends, FastAPI, File, Form, Query, UploadFile
+from fastapi import Depends, FastAPI, File, Form, UploadFile
 from fastapi.responses import FileResponse
 from loguru import logger
 from starlette.middleware.cors import CORSMiddleware

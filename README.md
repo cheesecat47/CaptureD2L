@@ -1,9 +1,25 @@
 # CaptureD2L
 
-## To Do
+CaptureD2L is a web page for invert terminal image from dark mode to light.
 
-- [ ] API server
-- [ ] MinIO
-    - [ ] ilm rule
-- [ ] Load Balancer
-- [ ] Kubernetes Deployment
+## Installation
+
+### Requirements
+
+- Docker & Docker-compose
+
+### Run
+
+```bash
+$ docker-compose up -d --build
+```
+
+Go to <http://localhost/>
+
+## Usage
+
+Go to <http://localhost/about>
+
+## Maintainers
+
+[@cheesecat47](https://github.com/cheesecat47): cheesecat47@gmail.com

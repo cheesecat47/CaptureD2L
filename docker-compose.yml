@@ -15,14 +15,10 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    volumes:
-      - ./api/src/:/app/
     restart: unless-stopped
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    volumes:
-      - ./frontend:/app
     restart: unless-stopped
