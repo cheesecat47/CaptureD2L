@@ -21,4 +21,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    environment:
+      - WDS_SOCKET_PORT=80
     restart: unless-stopped

@@ -19,7 +19,7 @@ CaptureD2L은 다크 모드에서 캡쳐한 터미널 이미지를 라이트 모
 
 ![captured2l how to image](${captured2l_slide_6})
 
-더 자세한 설명은 [블로그]()에서 확인하실 수 있습니다.
+더 자세한 설명은 [블로그](https://velog.io/@cheesecat47/CaptureD2L-프로젝트-소개)에서 확인하실 수 있습니다.
 
 ## 사용 방법
 
