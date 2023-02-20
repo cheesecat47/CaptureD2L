@@ -24,8 +24,10 @@ class Home extends Component {
     }
 
     handleFileInput(e) {
+        // handle empty space in filename: https://stackoverflow.com/questions/60747247/reactjs-image-upload-form-issues-with-space-in-filename
         this.setState({
             selectFile: e.target.files[0],
+            filename: e.target.files[0].name.replace(/ /g,'_'),
             imgBefore: URL.createObjectURL(e.target.files[0]),
             imgAfter: Object()
         })
@@ -49,17 +51,15 @@ class Home extends Component {
         }, {
             responseType: 'blob'
         }).then((res) => {
-            let filename = res.headers['content-disposition'].split('filename=')[1].replace(/"/g, '');
-            console.log('success: ', res, 'filename:', filename);
+            console.log('success: ', res, 'filename:', this.state.filename);
 
             if (res.data) {
                 // https://webcorgi.tistory.com/40
-                const objectURL = URL.createObjectURL(new File([res.data], filename, {
+                const objectURL = URL.createObjectURL(new File([res.data], this.state.filename, {
                     type: res.headers['content-type'],
                 }));
                 this.setState({
                     imgAfter: objectURL,
-                    filename: filename,
                 })
             }
         }).catch((err) => {
