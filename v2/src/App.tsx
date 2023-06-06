@@ -1,15 +1,13 @@
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css'
 
 // ----------------------------------------------------------------
 // import jimp: https://github.com/jimp-dev/jimp/issues/1091#issuecomment-1420811585
-// @ts-ignore
-await import("jimp/browser/lib/jimp.js");
+await import((`jimp/browser/lib/jimp.js`));
 const {Jimp} = window as typeof window & { Jimp: any };
 // ----------------------------------------------------------------
 
 function App() {
-    const [file, setFile] = useState();
     const [imgBefore, setImgBefore] = useState("");
     const [imgAfter, setImgAfter] = useState("");
 
@@ -18,14 +16,16 @@ function App() {
             imgBefore && URL.revokeObjectURL(imgBefore);
             imgAfter && URL.revokeObjectURL(imgAfter);
         };
-    }, []);
+    }, [imgBefore, imgAfter]);
 
-    const handleFileUpload = (e) => {
-        setFile(e.target.files[0]);
-        setImgBefore(URL.createObjectURL(e.target.files[0]));
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // https://stackoverflow.com/questions/43176560/property-files-does-not-exist-on-type-eventtarget-error-in-typescript
+        const target = e.target as HTMLInputElement;
+        const file = (target.files as FileList)[0];
+        setImgBefore(URL.createObjectURL(file));
     };
 
-    const rgb2hsl = (r: number = 0, g: number = 0, b: number = 0) => {
+    const rgb2hsl = (r = 0, g = 0, b = 0) => {
         // convert rgb to hsl
         // https://www.had2know.org/technology/hsl-rgb-color-converter.html
         // https://www.rapidtables.com/convert/color/rgb-to-hsl.html
@@ -40,8 +40,7 @@ function App() {
             l: (M + m) / 2
         };
 
-        if (d == 0) {
-        } else if (M == r) {
+        if (M == r) {
             hsl.h = 60 * (((g - b) / d) % 6)
         } else if (M == g) {
             hsl.h = 60 * (((b - r) / d) + 2)
@@ -52,7 +51,7 @@ function App() {
         return hsl;
     }
 
-    const hsl2rgb = (h: number = 0, s: number = 0, l: number = 0) => {
+    const hsl2rgb = (h = 0, s = 0, l = 0) => {
         // convert hsl to rgb
         // https://www.had2know.org/technology/hsl-rgb-color-converter.html
         // https://www.rapidtables.com/convert/color/hsl-to-rgb.html
@@ -96,41 +95,30 @@ function App() {
             return;
         }
 
-        Jimp.read(imgBefore).then((image) => {
-            image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx: number) {
-                // 1. convert rgb to hsl
-                const hsl = rgb2hsl(
-                    this.bitmap.data[idx + 0],
-                    this.bitmap.data[idx + 1],
-                    this.bitmap.data[idx + 2]
-                );
+        const image = await Jimp.read(imgBefore)
 
-                // 2. invert l channel
-                hsl.l = 1 - hsl.l;
+        image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (_0: number, _1: number, idx: number) {
+            // 1. convert rgb to hsl
+            const hsl = rgb2hsl(
+                image.bitmap.data[idx + 0],
+                image.bitmap.data[idx + 1],
+                image.bitmap.data[idx + 2]
+            );
 
-                // 3. revert hsl to rgb
-                const rgb = hsl2rgb(hsl.h, hsl.s, hsl.l);
+            // 2. invert l channel
+            hsl.l = 1 - hsl.l;
 
-                // !!! Dev log. to be removed !!!
-                if (x == image.bitmap.width / 2 && y == image.bitmap.height / 2) {
-                    console.log(
-                        "original rgb:", [this.bitmap.data[idx + 0], this.bitmap.data[idx + 1], this.bitmap.data[idx + 2]],
-                        " / hsl converted:", hsl,
-                        " / re-converted to rgb:", rgb);
-                }
+            // 3. revert hsl to rgb
+            const rgb = hsl2rgb(hsl.h, hsl.s, hsl.l);
 
-                this.bitmap.data[idx + 0] = rgb.r;
-                this.bitmap.data[idx + 1] = rgb.g;
-                this.bitmap.data[idx + 2] = rgb.b;
-            }).getBufferAsync(Jimp.AUTO).then((buffer) => {
-                const blob = new Blob([buffer]);
-                setImgAfter(URL.createObjectURL(blob));
-            }).catch((err: Error) => {
-                console.error(err);
-            });
-        }).catch((err: Error) => {
-            console.error(err);
+            image.bitmap.data[idx + 0] = rgb.r;
+            image.bitmap.data[idx + 1] = rgb.g;
+            image.bitmap.data[idx + 2] = rgb.b;
         });
+
+        const buffer = await image.getBufferAsync(Jimp.AUTO)
+        const blob = new Blob([buffer]);
+        setImgAfter(URL.createObjectURL(blob));
     };
 
     return (
