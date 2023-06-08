@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Header} from "./components/header.tsx";
+import {Footer} from "./components/footer.tsx";
 
 // ----------------------------------------------------------------
 // import jimp: https://github.com/jimp-dev/jimp/issues/1091#issuecomment-1420811585
@@ -160,6 +161,7 @@ function App() {
             <p>After</p>
           )}
         </div>
+        <Footer/>
       </div>
     </>
   );
