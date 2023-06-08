@@ -1,12 +1,12 @@
-import React from 'react';
-import {Navbar} from "./navbar.tsx";
+import React from "react";
+import { Navbar } from "./navbar.tsx";
 
 export function Header() {
-    return (
-        <>
-            <header>
-                <Navbar />
-            </header>
-        </>
-    )
+  return (
+    <>
+      <header>
+        <Navbar />
+      </header>
+    </>
+  );
 }
