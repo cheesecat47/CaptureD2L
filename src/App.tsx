@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import {Header} from "./components/header.tsx";
 
 // ----------------------------------------------------------------
 // import jimp: https://github.com/jimp-dev/jimp/issues/1091#issuecomment-1420811585
@@ -132,7 +132,8 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="container w-full max-w-full mx-auto" >
+        <Header />
         <form>
           <input type="file" onChange={(e) => handleFileUpload(e)} />
           <input

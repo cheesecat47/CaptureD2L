@@ -13,6 +13,8 @@
     "lint:fix": "eslint src --fix --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^2.0.18",
     "jimp": "^0.22.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
