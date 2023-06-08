@@ -1,4 +1,4 @@
-import React from "react";
+import { IonIcon } from "@ionic/react";
 
 export function Footer() {
   return (
@@ -7,7 +7,7 @@ export function Footer() {
         <div className="mx-auto w-24 columns-3">
           <div>
             <a href="https://github.com/cheesecat47" target="_blank">
-              <ion-icon name="logo-github" />
+              <IonIcon name="logo-github" />
             </a>
           </div>
           <div>
@@ -15,12 +15,12 @@ export function Footer() {
               href="https://www.linkedin.com/in/steven-shin-638413192/"
               target="_blank"
             >
-              <ion-icon name="logo-linkedin" />
+              <IonIcon name="logo-linkedin" />
             </a>
           </div>
           <div>
             <a href="mailto:cheesecat47@gmail.com" target="_blank">
-              <ion-icon name="mail" />
+              <IonIcon name="mail" />
             </a>
           </div>
         </div>
