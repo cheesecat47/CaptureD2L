@@ -1,14 +1,13 @@
-import React from 'react';
-import styles from './About.module.css';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import MyNav from '../components/Navigation';
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import rehypeRaw from 'rehype-raw'
-import captured2l_slide_5 from '../assets/img/captured2l.005.jpeg';
-import captured2l_slide_6 from '../assets/img/captured2l.006.jpeg';
-
+import React from "react";
+import styles from "./About.module.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import MyNav from "../components/Navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import captured2l_slide_5 from "../assets/img/captured2l.005.jpeg";
+import captured2l_slide_6 from "../assets/img/captured2l.006.jpeg";
 
 const md = `
 # Captured terminal image - Dark mode to Light
@@ -31,20 +30,33 @@ CaptureD2L은 다크 모드에서 캡쳐한 터미널 이미지를 라이트 모
 `;
 
 const About = () => {
-    return (
-        <div>
-            <MyNav />
-            <Container className={styles.About}>
-                <Row className='about-article'>
-                    <ReactMarkdown
-                        children={md}
-                        components={{ img: ({ node, ...props }) => <img style={{ maxWidth: '100%', maxHeight: '75vh', border: 'solid 1px #00000011' }}{...props} alt="" /> }}
-                        rehypePlugins={[rehypeRaw]}
-                        remarkPlugins={[remarkGfm]} />
-                </Row>
-            </Container>
-        </div>
-    );
+  return (
+    <div>
+      <MyNav />
+      <Container className={styles.About}>
+        <Row className="about-article">
+          <ReactMarkdown
+            children={md}
+            components={{
+              img: ({ node, ...props }) => (
+                <img
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "75vh",
+                    border: "solid 1px #00000011",
+                  }}
+                  {...props}
+                  alt=""
+                />
+              ),
+            }}
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkGfm]}
+          />
+        </Row>
+      </Container>
+    </div>
+  );
 };
 
 export default About;

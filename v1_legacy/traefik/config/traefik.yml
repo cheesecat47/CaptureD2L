@@ -19,6 +19,5 @@ providers:
 # API and dashboard configuration
 api:
   dashboard: true
-
 # log:
 #   level: DEBUG

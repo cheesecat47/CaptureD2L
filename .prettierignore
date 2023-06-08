@@ -1,0 +1,8 @@
+# Ignore artifacts:
+.github
+.idea
+dist
+node_modules
+v1_legacy
+build
+coverage

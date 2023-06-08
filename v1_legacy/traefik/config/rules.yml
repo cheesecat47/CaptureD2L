@@ -15,8 +15,8 @@ http:
       middlewares: "fastapi_stripprefix"
   middlewares:
     fastapi_stripprefix:
-      stripPrefix: 
-        prefixes: 
+      stripPrefix:
+        prefixes:
           - "/captured2l/api/v1"
   services:
     frontend:
