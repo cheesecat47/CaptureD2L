@@ -1,6 +1,5 @@
-import {Fragment} from 'react';
-import {Disclosure, Menu, Transition} from "@headlessui/react";
-import {Bars3Icon, BellIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {Disclosure} from "@headlessui/react";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
 
 
 const navigation = [
@@ -18,7 +17,7 @@ export function Navbar() {
         <Disclosure as="nav" className="bg-gray-800">
             {({open}) => (
                 <>
-                    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-6">
+                    <div className="mx-auto sm:max-w-lg md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
                         <div className="relative flex h-16 items-center justify-between">
                             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
