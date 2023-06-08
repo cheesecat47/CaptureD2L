@@ -4,7 +4,7 @@ import { Footer } from "./components/footer.tsx";
 
 // ----------------------------------------------------------------
 // import jimp: https://github.com/jimp-dev/jimp/issues/1091#issuecomment-1420811585
-await import(`jimp/browser/lib/jimp.js`);
+await import((`jimp/browser/lib/jimp.js`));
 const { Jimp } = window as typeof window & { Jimp: any };
 // ----------------------------------------------------------------
 
