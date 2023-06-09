@@ -138,27 +138,57 @@ function App() {
       <div className="container mx-auto w-full max-w-full overflow-hidden bg-white dark:bg-slate-700 dark:text-white">
         <Header />
         <div className="mx-auto sm:max-w-lg md:max-w-xl lg:max-w-3xl xl:max-w-5xl">
-          <div id="configBox">
-            <form>
-              <input type="file" onChange={(e) => handleFileUpload(e)} />
+          <form className="my-4 w-full px-4">
+            <div className="mb-6 md:flex md:items-center">
+              <label
+                htmlFor="fileInput"
+                className="block pr-4 font-bold md:w-1/3 md:text-right"
+              >
+                Image:
+              </label>
               <input
+                id="fileInput"
+                type="file"
+                onChange={(e) => handleFileUpload(e)}
+                className="w-full appearance-none rounded border-2 px-4 py-2 leading-tight md:w-2/3"
+              />
+            </div>
+            <div className="mb-6 md:flex md:items-center">
+              <label
+                htmlFor="gammaInput"
+                className="block pr-4 font-bold md:w-1/3 md:text-right"
+              >
+                Gamma:
+              </label>
+              <input
+                id="gammaInput"
                 type="number"
                 step="0.1"
                 placeholder="1.8"
                 max="5"
                 min="0"
                 name="gamma"
+                className="w-full appearance-none rounded border-2 px-4 py-2 leading-tight md:w-2/3"
               />
-            </form>
-            <div>
-              <button onClick={onSubmit}>Submit</button>
             </div>
+          </form>
+          <div className="my-4 w-full px-4 text-center">
+            <button
+              className="focus:shadow-outline w-32 rounded bg-gray-400 px-1 py-2 font-bold text-white shadow hover:bg-gray-300"
+              onClick={onSubmit}
+            >
+              Submit
+            </button>
           </div>
           <div
             id="resultBox"
             className="my-10 columns-1 items-center justify-center gap-2 text-center sm:columns-2"
           >
-            <img src={imgBefore || sampleBefore} alt="Before" className="w-full" />
+            <img
+              src={imgBefore || sampleBefore}
+              alt="Before"
+              className="w-full"
+            />
             <img src={imgAfter || sampleAfter} alt="After" className="w-full" />
           </div>
         </div>
