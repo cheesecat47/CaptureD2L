@@ -1,5 +1,7 @@
 # CaptureD2L
 
+[![github pages](https://github.com/cheesecat47/CaptureD2L/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/cheesecat47/CaptureD2L/actions/workflows/gh-pages.yml)
+
 CaptureD2L is a web page for invert terminal image from dark mode to light.
 
 ## Installation
