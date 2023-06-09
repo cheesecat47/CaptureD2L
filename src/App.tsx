@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Header } from "./components/header.tsx";
 import { Footer } from "./components/footer.tsx";
 import sampleBefore from "./assets/sample_before.png";
@@ -14,13 +14,6 @@ function App() {
   const [imgBefore, setImgBefore] = useState("");
   const [imgAfter, setImgAfter] = useState("");
   const [brightness, setBrightness] = useState(0);
-
-  // useEffect(() => {
-  //   return () => {
-  //     imgBefore && URL.revokeObjectURL(imgBefore);
-  //     imgAfter && URL.revokeObjectURL(imgAfter);
-  //   };
-  // }, [imgBefore, imgAfter]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     // https://stackoverflow.com/questions/43176560/property-files-does-not-exist-on-type-eventtarget-error-in-typescript
@@ -143,16 +136,17 @@ function App() {
     setImgAfter(URL.createObjectURL(blob));
   };
 
-  const checkBrightnessIsNaN = (v) => {
-    if (v === "" || isNaN(v)) {
+  const checkBrightnessIsNaN = (v: number) => {
+    if (isNaN(v)) {
       alert("Brightness value is not a number.\nPlease check it again.");
       return true;
     }
     return false;
   };
 
-  const onChangeBrightness = (e) => {
-    const v = parseFloat(e.target.value);
+  const onChangeBrightness = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const v = parseFloat(target.value);
     if (checkBrightnessIsNaN(v)) {
       return;
     }
