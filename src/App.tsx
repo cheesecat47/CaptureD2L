@@ -13,13 +13,14 @@ const { Jimp } = window as typeof window & { Jimp: any };
 function App() {
   const [imgBefore, setImgBefore] = useState("");
   const [imgAfter, setImgAfter] = useState("");
+  const [brightness, setBrightness] = useState(0);
 
-  useEffect(() => {
-    return () => {
-      imgBefore && URL.revokeObjectURL(imgBefore);
-      imgAfter && URL.revokeObjectURL(imgAfter);
-    };
-  }, [imgBefore, imgAfter]);
+  // useEffect(() => {
+  //   return () => {
+  //     imgBefore && URL.revokeObjectURL(imgBefore);
+  //     imgAfter && URL.revokeObjectURL(imgAfter);
+  //   };
+  // }, [imgBefore, imgAfter]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     // https://stackoverflow.com/questions/43176560/property-files-does-not-exist-on-type-eventtarget-error-in-typescript
@@ -101,6 +102,10 @@ function App() {
       return;
     }
 
+    if (checkBrightnessIsNaN(brightness)) {
+      return;
+    }
+
     const image = await Jimp.read(imgBefore);
 
     image.scan(
@@ -128,9 +133,30 @@ function App() {
       }
     );
 
+    // 4. additional processing
+    if (brightness !== 0) {
+      image.brightness(brightness);
+    }
+
     const buffer = await image.getBufferAsync(Jimp.AUTO);
     const blob = new Blob([buffer]);
     setImgAfter(URL.createObjectURL(blob));
+  };
+
+  const checkBrightnessIsNaN = (v) => {
+    if (v === "" || isNaN(v)) {
+      alert("Brightness value is not a number.\nPlease check it again.");
+      return true;
+    }
+    return false;
+  };
+
+  const onChangeBrightness = (e) => {
+    const v = parseFloat(e.target.value);
+    if (checkBrightnessIsNaN(v)) {
+      return;
+    }
+    setBrightness(v);
   };
 
   return (
@@ -155,19 +181,20 @@ function App() {
             </div>
             <div className="mb-6 md:flex md:items-center">
               <label
-                htmlFor="gammaInput"
+                htmlFor="brightnessInput"
                 className="block pr-4 font-bold md:w-1/3 md:text-right"
               >
-                Gamma:
+                Brightness:
               </label>
               <input
-                id="gammaInput"
+                id="brightnessInput"
                 type="number"
                 step="0.1"
-                placeholder="1.8"
-                max="5"
-                min="0"
-                name="gamma"
+                placeholder="-1.0 ~ 1.0"
+                max="1.0"
+                min="-1.0"
+                name="brightness"
+                onChange={onChangeBrightness}
                 className="w-full appearance-none rounded border-2 px-4 py-2 leading-tight md:w-2/3"
               />
             </div>
