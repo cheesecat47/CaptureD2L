@@ -27,6 +27,14 @@ Go to <http://localhost:5173/CaptureD2L/>
     - [v1](./captured2l.md)
     - [v2](https://cheesecat47.github.io/posts/2023-06-07/cd2l-rgb-to-hsl/)
 
+## Release Notes
+
+### v 2.0.0.
+
+- 기존에는 이미지 처리를 위해 Python API 서버를 따로 두었으나, 이번 버전에서는 [Jimp](https://github.com/jimp-dev/jimp) 라이브러리를 사용해 React Frontend에서
+  모든 처리가 가능하도록 변경했습니다.
+    - <https://cheesecat47.github.io/posts/2023-06-04/cd2l-v2/>
+
 ## Maintainers
 
 [@cheesecat47](https://github.com/cheesecat47): cheesecat47@gmail.com
