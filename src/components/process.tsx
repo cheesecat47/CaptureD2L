@@ -11,7 +11,7 @@ const { Jimp } = window as typeof window & { Jimp: any };
 export function Process() {
   const [imgBefore, setImgBefore] = useState("");
   const [imgAfter, setImgAfter] = useState("");
-  const [brightness, setBrightness] = useState(0);
+  const [brightness, setBrightness] = useState(20);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     // https://stackoverflow.com/questions/43176560/property-files-does-not-exist-on-type-eventtarget-error-in-typescript
@@ -126,7 +126,7 @@ export function Process() {
 
     // 4. additional processing
     if (brightness !== 0) {
-      image.brightness(brightness);
+      image.color([{ apply: "lighten", params: [brightness] }]);
     }
 
     const buffer = await image.getBufferAsync(Jimp.AUTO);
@@ -179,13 +179,13 @@ export function Process() {
             <input
               id="brightnessInput"
               type="number"
-              step="0.1"
-              placeholder="-1.0 ~ 1.0"
-              max="1.0"
-              min="-1.0"
+              step="5"
+              placeholder="0 ~ 100, default: 20"
+              max="100"
+              min="0"
               name="brightness"
               onChange={onChangeBrightness}
-              className="w-full appearance-none rounded border-2 px-4 py-2 leading-tight md:w-2/3"
+              className="w-full appearance-none rounded border-2 px-4 py-2 leading-tight dark:text-black md:w-2/3"
             />
           </div>
         </form>
