@@ -4,12 +4,12 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 const navigation = [
   {
     name: "About",
-    href: "https://cheesecat47.github.io/posts/2023-02-11-introduce-cd2l/2023-02-11-introduce-cd2l/",
+    href: 'https://cheesecat47.github.io/blog/2023/02/11/introduce-cd2l',
     current: true,
   },
   {
     name: "Project",
-    href: "https://cheesecat47.github.io/tags/captured-2-l/",
+    href: 'https://cheesecat47.github.io/tags/captured2l',
     current: false,
   },
   {

@@ -11,10 +11,7 @@ export function Footer() {
             </a>
           </div>
           <div>
-            <a
-              href="https://www.linkedin.com/in/steven-shin-638413192/"
-              target="_blank"
-            >
+            <a href="https://www.linkedin.com/in/shinjuyong" target="_blank">
               <IonIcon name="logo-linkedin" />
             </a>
           </div>
@@ -24,7 +21,7 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div>CaptureD2L ver.2.1.0. © 2023. cheesecat47.</div>
+        <div>CaptureD2L ver.2.1.1. © 2023. cheesecat47.</div>
       </footer>
     </>
   );
