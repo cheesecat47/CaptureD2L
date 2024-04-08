@@ -1,26 +1,26 @@
-import { Disclosure } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Disclosure } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
   {
-    name: "About",
+    name: 'About',
     href: 'https://cheesecat47.github.io/blog/2023/02/11/introduce-cd2l',
     current: true,
   },
   {
-    name: "Project",
+    name: 'Project',
     href: 'https://cheesecat47.github.io/tags/captured2l',
     current: false,
   },
   {
-    name: "GitHub",
-    href: "https://github.com/cheesecat47/CaptureD2L",
+    name: 'GitHub',
+    href: 'https://github.com/cheesecat47/CaptureD2L',
     current: false,
   },
-];
+]
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export function Navbar() {
@@ -43,9 +43,7 @@ export function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <div className="block h-8 w-auto text-white lg:block">
-                    CaptureD2L
-                  </div>
+                  <div className="block h-8 w-auto text-white lg:block">CaptureD2L</div>
                 </div>
                 <div className="hidden sm:ml-10 sm:block">
                   <div className="flex space-x-4">
@@ -55,11 +53,11 @@ export function Navbar() {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          'rounded-md px-3 py-2 text-sm font-medium'
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
                       </a>
@@ -79,11 +77,11 @@ export function Navbar() {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    'block rounded-md px-3 py-2 text-base font-medium'
                   )}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={item.current ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -93,5 +91,5 @@ export function Navbar() {
         </>
       )}
     </Disclosure>
-  );
+  )
 }

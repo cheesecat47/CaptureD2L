@@ -1,4 +1,4 @@
-import { Navbar } from "./navbar.tsx";
+import { Navbar } from './navbar.tsx'
 
 export function Header() {
   return (
@@ -7,5 +7,5 @@ export function Header() {
         <Navbar />
       </header>
     </>
-  );
+  )
 }

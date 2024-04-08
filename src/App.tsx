@@ -1,6 +1,6 @@
-import { Header } from "./components/header.tsx";
-import { Footer } from "./components/footer.tsx";
-import { Process } from "./components/process.tsx";
+import { Header } from './components/header.tsx'
+import { Footer } from './components/footer.tsx'
+import { Process } from './components/process.tsx'
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Footer />
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
